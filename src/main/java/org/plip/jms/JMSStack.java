@@ -2,11 +2,14 @@ package org.plip.jms;
 
 import java.util.Deque;
 import java.util.concurrent.LinkedBlockingDeque;
+
 import javax.jms.Connection;
 import javax.jms.JMSException;
 import javax.jms.MessageConsumer;
 import javax.jms.MessageProducer;
+import javax.jms.QueueBrowser;
 import javax.jms.Session;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -82,6 +85,17 @@ public final class JMSStack implements JMSClosable {
 		});
 		return producer;
 	}
+
+	public <T extends QueueBrowser> T push(final T browser) {
+		push(new JMSClosable() {
+			@Override
+			public void close() throws JMSException {
+				browser.close();
+			}
+		});
+		return browser;
+	}
+
 
 	public JMSClosable pop() {
 		return _deque.pollLast();
