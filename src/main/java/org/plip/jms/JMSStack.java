@@ -100,7 +100,7 @@ public final class JMSStack implements JMSClosable {
 
 	/**
 	 * Transfers all elements of this stack into a new instance, making this one empty.
-	 * @return
+	 * @return a new instance if {@link JMSStack} containing all children of this stack.
 	 */
 	public synchronized JMSStack claim() {
 		JMSStack ret = new JMSStack(_deque);

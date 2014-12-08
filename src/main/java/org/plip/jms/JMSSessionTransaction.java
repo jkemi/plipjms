@@ -32,11 +32,11 @@ public class JMSSessionTransaction implements JMSClosable {
 	/**
 	 * Commits any changes in this transaction.
 	 *
-	 * @see {@link Session#commit()}
+	 * @see Session#commit()
 	 *
-	 * @throws JMSException
-	 * @throws IllegalStateException
-	 * @throws TransactionRolledBackException
+	 * @throws JMSException				see {@link Session#commit()}
+	 * @throws IllegalStateException	{@link #commit()}, {@link #rollback()} or {@link #close} has already been called
+	 * @throws TransactionRolledBackException	see {@link Session#commit()}
 	 */
 	public void commit() throws JMSException, IllegalStateException, TransactionRolledBackException {
 		if (session == null) {
@@ -52,14 +52,14 @@ public class JMSSessionTransaction implements JMSClosable {
 	/**
 	 * Performs an explicit rollback.
 	 *
-	 * @see {@link Session#rollback()}
+	 * @see Session#rollback()
 	 *
 	 * It should not be necessary to call this method explicitly as
 	 * as it's taken care of in {@link #close()}
 	 * However it is still safe to call this method, in which case nothing is performed by {@link #close()}.
 	 *
 	 * @throws JMSException if rollback fails
-	 * @throws IllegalStateException if already committed or rollbacked
+	 * @throws IllegalStateException if already committed or rolled back
 	 */
 	public void rollback() throws JMSException, IllegalStateException {
 		if (session == null) {
@@ -76,7 +76,7 @@ public class JMSSessionTransaction implements JMSClosable {
 	 * Rollbacks any uncommitted session state, or if {@link #rollback()} or {@link #commit()} has already been called
 	 * performs nothing.
 	 *
-	 * @see {@link Session#rollback()}
+	 * @see Session#rollback()
 	 * @throws JMSException if rollback fails
 	 */
 	@Override
