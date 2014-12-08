@@ -1,8 +1,21 @@
+buildscript {
+	// use propdeps ( https://github.com/spring-projects/gradle-plugins/tree/master/propdeps-plugin )
+	repositories { maven { url 'http://repo.spring.io/plugins-release' } }
+	dependencies { classpath 'org.springframework.build.gradle:propdeps-plugin:[0.0.7,0.0.9)' }
+}
+
 apply plugin: 'java'
-apply plugin: 'eclipse'
+//apply plugin: 'eclipse'
+
+// propdeps
+apply plugin: 'propdeps'
+apply plugin: 'propdeps-maven'
+//apply plugin: 'propdeps-idea'
+//apply plugin: 'propdeps-eclipse'
+
 
 group = 'org.plip'
-version = '1.0'
+version = '1.0.1'
 //sourceCompatibility = JavaVersion.VERSION_1_7
 //targetCompatibility = JavaVersion.VERSION_1_7
 
@@ -11,11 +24,9 @@ repositories {
 }
 
 dependencies {
-	compile('org.apache.geronimo.specs:geronimo-jms_1.1_spec:1.1')
-	compile('org.slf4j:slf4j-api:[1.7,)')
+	provided 'org.apache.geronimo.specs:geronimo-jms_1.1_spec:1.1.1'
 
-	testCompile('junit:junit:[4,)')
-	testCompile('org.slf4j:slf4j-jdk14:[1.7,)')
+	testCompile 'junit:junit:[4,)'
 }
 
 test {

@@ -10,15 +10,12 @@ import javax.jms.MessageProducer;
 import javax.jms.QueueBrowser;
 import javax.jms.Session;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * A stack of JMSClosable items that are closed in correct order.
  */
 public final class JMSStack implements JMSClosable {
 
-	private static Logger _logger = LoggerFactory.getLogger(JMSStack.class);
+//	private static Logger _logger = LoggerFactory.getLogger(JMSStack.class);
 
 	private final Deque<JMSClosable> _deque;
 
@@ -142,7 +139,7 @@ public final class JMSStack implements JMSClosable {
 		}
 
 		if (err != null) {
-			_logger.warn("suppressed {} additional exceptions", suppressedCount);
+			//_logger.warn("suppressed {} additional exceptions", suppressedCount);
 			throw err;
 		}
 	}
@@ -151,7 +148,7 @@ public final class JMSStack implements JMSClosable {
 		try {
 			close();
 		} catch (JMSException e) {
-			_logger.info("suppressed a cascading JMS error on guard close", e);
+			//_logger.info("suppressed a cascading JMS error on guard close", e);
 		}
 	}
 }
