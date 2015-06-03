@@ -12,7 +12,6 @@ Servers
 
 # netbeans
 .nb-gradle/
-.nb-gradle-properties
 nbproject/
 nbbuild/
 dist/

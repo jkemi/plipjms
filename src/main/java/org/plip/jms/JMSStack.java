@@ -98,8 +98,8 @@ public final class JMSStack implements JMSClosable {
 	/**
 	 * TemporaryQueue will be {@link TemporaryQueue#delete()}-ed on {@link JMSStack#close()}
 	 * @param <T>
-	 * @param temporary
-	 * @return
+	 * @param temporary Temporary queue to delete
+	 * @return input queue
 	 */
 	public <T extends TemporaryQueue> T push(final T temporary) {
 		push(new JMSClosable() {
@@ -114,8 +114,8 @@ public final class JMSStack implements JMSClosable {
 	/**
 	 * TemporaryTopic will be {@link TemporaryTopic#delete()}-ed on {@link JMSStack#close()}
 	 * @param <T>
-	 * @param temporary
-	 * @return
+	 * @param temporary Temporary topic to delete
+	 * @return input topic
 	 */
 	public <T extends TemporaryTopic> T push(final T temporary) {
 		push(new JMSClosable() {
