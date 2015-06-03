@@ -9,6 +9,8 @@ import javax.jms.MessageConsumer;
 import javax.jms.MessageProducer;
 import javax.jms.QueueBrowser;
 import javax.jms.Session;
+import javax.jms.TemporaryQueue;
+import javax.jms.TemporaryTopic;
 
 /**
  * A stack of JMSClosable items that are closed in correct order.
@@ -93,6 +95,37 @@ public final class JMSStack implements JMSClosable {
 		return browser;
 	}
 
+	/**
+	 * TemporaryQueue will be {@link TemporaryQueue#delete()}-ed on {@link JMSStack#close()}
+	 * @param <T>
+	 * @param temporary
+	 * @return
+	 */
+	public <T extends TemporaryQueue> T push(final T temporary) {
+		push(new JMSClosable() {
+			@Override
+			public void close() throws JMSException {
+				temporary.delete();
+			}
+		});
+		return temporary;
+	}
+
+	/**
+	 * TemporaryTopic will be {@link TemporaryTopic#delete()}-ed on {@link JMSStack#close()}
+	 * @param <T>
+	 * @param temporary
+	 * @return
+	 */
+	public <T extends TemporaryTopic> T push(final T temporary) {
+		push(new JMSClosable() {
+			@Override
+			public void close() throws JMSException {
+				temporary.delete();
+			}
+		});
+		return temporary;
+	}
 
 	public JMSClosable pop() {
 		return _deque.pollLast();
